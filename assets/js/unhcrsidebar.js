@@ -2,6 +2,13 @@
 var scrollSpy = new bootstrap.ScrollSpy(document.body, {
     target: '#sidebar'
   })
+
+
+  $("#sidebar").affix({
+    offset: {
+      top: 60
+    }
+});
   
   //Back to top
   var btn = $('#back-to-top');
