@@ -1,11 +1,22 @@
-library(jsonlite)
 library(tidyverse)
+library(esri2sf)
+library(sf)
 
-odp_json <- "https://data.unhcr.org/api-content/documents.json?API_KEY=d78bdd20-36eb-4a7a-8a69-e009f21f0cf9&order[created]=desc&situation=core&page=1&limit=500"
+url <- "https://gis.unhcr.org/arcgis/rest/services/core_v2/wrl_polbnd_int_15m_a_unhcr/FeatureServer/0"
 
-odp_df <- fromJSON(odp_json)
+ctry_sf <- esri2sf(url)
 
-View(odp_df)
+active <- c("SDN", "SSD", "ETH", "TCD", "EGY", "CAF")
+previous <- c("BFA", "TGO", "CIV", "BEN", "GHA")
 
-odp_df |> 
-    select(title, thumbnailFile, publishDate)
+actvive_sf <- ctry_sf |> 
+    select(iso3, color_code, terr_name)  |> 
+    filter(color_code %in% active)
+
+sf::st_write(actvive_sf, "active_core.geojson")
+
+previous_sf <- ctry_sf |> 
+    select(iso3, color_code, terr_name)  |> 
+    filter(color_code %in% previous)
+
+sf::st_write(previous_sf, "previous_core.geojson")
