@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,152 +9,168 @@
     <link href="/core-wiki/assets/css/main.min.css" rel="stylesheet" />
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-    <!-- <style>
-    /* hide inactive nested list */
-    .navbar .nav ul.nav {
-        display: none;           
-    }
-    /* show active nested list */
-    .navbar .nav .nav>.active>ul.nav  {
-        display: block;           
-    }
-    </style> -->
+    <style>
+        #map {
+            width: 100%;
+            height: 100%;
+            min-height: 520px;
+            background-color: #e7effd;
+            position: relative;
+        }
+    </style>
+
 </head>
+
 <body>
-    <h1 class="title">Emergency products guidance</h1>
+    <h1 class="title">UNHCR CORE</h1>
     <header>
         <nav class="navbar navbar-expand-lg border-bottom">
             <div class="container p-2">
-            <a class="navbar-brand" href="#">
-                <img src="/core-wiki/assets/img/unhcr_core_logo.svg" alt="UNHCR Core Logo" class="img-fluid" style="height: 3rem; max-height:2.75rem" />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link"  href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Page name</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"href="#">Page name</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active"  href="#">CORE guidance</a>
-                </li>
-                </ul>
-            </div>
+                <a class="navbar-brand" href="#">
+                    <img src="/core-wiki/assets/img/unhcr_core_logo.svg" alt="UNHCR Core Logo" class="img-fluid"
+                        style="height: 3rem; max-height:2.75rem" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Page name</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Page name</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">CORE guidance</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
     <main>
         <div class="container my-5">
-          <div class="mb-5 text-center">
-            <h2 class="text-uppercase">UNHCR CORE</h2>
-            <hr class="short-hr">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <p>CORE is UNHCR's enhanced information management approach to new refugee emergencies. CORE products will be produced and published weekly at the beginning of a response to new or deteriorating refugee emergencies. They focus on population movements, humanitarian need, and response. They aim to support coordination through the provision of the latest data available.</p>
-                <p>Beginning in March 2023, CORE products have been produced for all new refugee emergencies, supporting coordination and helping Governments, UNHCR and partners to communicate with one voice on behalf of the forcibly displaced. The map below shows where CORE has been activated. This is followed by a searchable list of those products.</p>
+            <div class="mb-5 text-center">
+                <h2 class="text-uppercase">UNHCR CORE</h2>
+                <hr class="short-hr">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <p>CORE is UNHCR's enhanced information management approach to new refugee emergencies. CORE
+                            products will be produced and published weekly at the beginning of a response to new or
+                            deteriorating refugee emergencies. They focus on population movements, humanitarian need,
+                            and response. They aim to support coordination through the provision of the latest data
+                            available.</p>
+                        <p>Beginning in March 2023, CORE products have been produced for all new refugee emergencies,
+                            supporting coordination and helping Governments, UNHCR and partners to communicate with one
+                            voice on behalf of the forcibly displaced. The map below shows where CORE has been
+                            activated. This is followed by a searchable list of those products.</p>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col mb-5">
+                    <p class="text-center">
+                        <b>Legend:</b> <span class="badge pill bg-primary">Active CORE</span>    <span class="badge pill bg-info">Previous CORE</span>
+                    </p>
+                    <div id="map"></div>
+                    
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col mb-5">
-                <p class="text-center">
-                    <small><span class="badge rounded-pill bg-primary text-primary">o</span>  Active CORE  |  <span class="badge rounded-pill bg-info text-info">o</span> Previous CORE</small>
-                </p>
-                <div id="map" style="width: 100%; min-height: 500px;"></div>
-                <script>
-                    mapboxgl.accessToken = 'pk.eyJ1IjoidW5oY3IiLCJhIjoiOUQzQ2dnbyJ9.6ghfFmvxpu7HvHzXci_ogw';
-                    const map = new mapboxgl.Map({
-                        container: 'map', // container ID
-                        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-                        style: 'mapbox://styles/unhcr/cli3a3l5a00kn01qu7kpk6ttz', // style URL
-                        center: [0, 10], // starting position
-                        zoom: 1.2, // starting zoom
-                        projection: 'naturalEarth'
-                    });
-                    map.on('load', () => {
-                        map.addSource('active', {
-                        type: 'geojson',
-                        // Use a URL for the value for the `data` property.
-                        data: 'active_core.geojson'
-                        });
-
-                        map.addSource('previous', {
-                        type: 'geojson',
-                        // Use a URL for the value for the `data` property.
-                        data: 'previous_core.geojson'
-                        });
-                        
-                        map.addLayer({
-                            'id': 'core-active',
-                            'type': 'fill',
-                            'source': 'active', // reference the data source
-                            'layout': {},
-                            'paint': {
-                            'fill-color': '#0072bc', // blue color fill
-                            'fill-opacity': 0.5
-                            }
-                        });
-
-                        map.addLayer({
-                            'id': 'core-previous',
-                            'type': 'fill',
-                            'source': 'previous', // reference the data source
-                            'layout': {},
-                            'paint': {
-                            'fill-color': '#8EBEFF', // blue color fill
-                            'fill-opacity': 0.5
-                            }
-                        });
-                    });
-                    // Add zoom and rotation controls to the map.
-                    map.addControl(new mapboxgl.NavigationControl());
-                </script>
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <script type="text/javascript" defer src="https://datawrapper.dwcdn.net/mgkC6/embed.js?v=5"
+                            charset="utf-8"></script><noscript><img src="https://datawrapper.dwcdn.net/mgkC6/full.png"
+                                alt="" /></noscript>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col">
-                <div><script type="text/javascript" defer src="https://datawrapper.dwcdn.net/mgkC6/embed.js?v=5" charset="utf-8"></script><noscript><img src="https://datawrapper.dwcdn.net/mgkC6/full.png" alt="" /></noscript></div>
-            </div>
-          </div>
         </div>
     </main>
 
     <footer class="footer mt-auto bg-dark py-3">
         <div class="container">
             <div class="d-flex flex-wrap justify-content-between">
-            <ul class="nav">
-                <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Page name</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Page name</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Product guidance</a>
-                </li>
-            </ul>
-            <a class="btn btn-primary" href="mailto:email@unhcr.org" role="button">Contact
-                us</a>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Page name</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Page name</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Product guidance</a>
+                    </li>
+                </ul>
+                <a class="btn btn-primary" href="mailto:email@unhcr.org" role="button">Contact
+                    us</a>
             </div>
             <p class="text-muted px-3"><small>© UNHCR 2022</small></p>
         </div>
     </footer>
 
+    <!-- Map with mapbox -->
+    <script>
+        // access token 
+        mapboxgl.accessToken = 'pk.eyJ1IjoidW5oY3IiLCJhIjoiOUQzQ2dnbyJ9.6ghfFmvxpu7HvHzXci_ogw';
 
-   <!-- Bootstrap Bundle with Popper -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-   <!-- UNHCR sidebar JS file -->
-  <!-- <script type="module" src="/assets/js/unhcrsidebar.js"></script> -->
+        // variables
+        var active = ["SDN", "SSD", "ETH", "TCD", "EGY", "CAF"];
+        var previous = ["BFA", "TGO", "CIV", "BEN", "GHA"];
+
+        // create map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/unhcr/ckvl4xy2mj45z15mpkq6w2nv8', // style URL
+            center: [0, 8], // starting position
+            zoom: 1.25, // starting zoom
+            projection: 'naturalEarth'
+        });
+
+        // add layers on load
+        map.on('load', function () {
+            // add 15m source
+            map.addSource('wrl15m', {
+                type: 'vector',
+                url: 'mapbox://unhcr.01fhqrrm'
+            });
+
+            // add 15m layer
+            map.addLayer({
+                id: 'countries-15m',
+                type: 'fill',
+                source: 'wrl15m',
+                'source-layer': 'wrl_polbnd_int_15m_a_unhcr-bpn9hj',
+                paint: {
+                    'fill-color': [
+                        'match',
+                        ['get', 'color_code'], // Use ISO code as the property
+                        active, '#0072bc', // Group active
+                        previous, '#8EBEFF', // Group previous
+                        'transparent' // default color for other countries
+                    ],
+                    'fill-opacity': 0.5
+                }
+            });
+
+            // Add zoom and rotation controls to the map.
+            map.addControl(new mapboxgl.NavigationControl());
+        });
+    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!-- UNHCR sidebar JS file -->
+    <!-- <script type="module" src="/assets/js/unhcrsidebar.js"></script> -->
 </body>
 </html>
